@@ -19,6 +19,13 @@ A Spring Boot-based backend for an English learning web application.
 - MySQL Driver → MySQL database connection
 - Spring Web → REST API development
 
+### How to run
+
+1. clone this repository
+2. Install MySQL
+3. Modify datasource section in application.yml according to your MySQL settings.
+4. Run this project
+
 ## About this project
 
 ### 💾Database Schema Documentation
