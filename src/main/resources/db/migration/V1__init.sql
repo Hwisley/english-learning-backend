@@ -21,7 +21,8 @@ CREATE TABLE meaning (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     word_id BIGINT NOT NULL,
     meaning VARCHAR(255) NOT NULL UNIQUE,
-    word_class VARCHAR(255),
+    extra_meaning VARCHAR(255),
+    word_class VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (word_id) REFERENCES word(id) ON DELETE CASCADE
@@ -30,8 +31,8 @@ CREATE TABLE meaning (
 -- Create table: sentence
 CREATE TABLE sentence (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    sentence TEXT NOT NULL,
-    translated_sentence TEXT,
+    eng_sentence TEXT NOT NULL,
+    kor_sentence TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -45,18 +46,20 @@ CREATE TABLE word_sentence_mapping (
     FOREIGN KEY (sentence_id) REFERENCES sentence(id) ON DELETE CASCADE
 );
 
--- Create table: script
-CREATE TABLE script (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(2048) NOT NULL,
-    video_url VARCHAR(2048)
-);
-
 -- Create table: source_type
 CREATE TABLE source_type (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     alias VARCHAR(255) NOT NULL,
     home_url VARCHAR(2048)
+);
+
+-- Create table: script
+CREATE TABLE script (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    video_url VARCHAR(2048),
+    source_type BIGINT,
+    FOREIGN KEY (source_type) REFERENCES source_type(id)
 );
 
 -- Create table: script_mapping
@@ -65,9 +68,7 @@ CREATE TABLE script_mapping (
     script_id BIGINT NOT NULL,
     sentence_id BIGINT NOT NULL,
     `order` INT NOT NULL,
-    source_type BIGINT,
     FOREIGN KEY (script_id) REFERENCES script(id) ON DELETE CASCADE,
-    FOREIGN KEY (sentence_id) REFERENCES sentence(id) ON DELETE CASCADE,
-    FOREIGN KEY (source_type) REFERENCES source_type(id)
+    FOREIGN KEY (sentence_id) REFERENCES sentence(id) ON DELETE CASCADE
 );
 
