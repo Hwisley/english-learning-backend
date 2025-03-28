@@ -20,7 +20,7 @@ CREATE TABLE word (
 CREATE TABLE meaning (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     word_id BIGINT NOT NULL,
-    meaning VARCHAR(255) NOT NULL UNIQUE,
+    meaning VARCHAR(255) NOT NULL,
     extra_meaning VARCHAR(255),
     word_class VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
