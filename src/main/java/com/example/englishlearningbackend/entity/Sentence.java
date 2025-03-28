@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,19 +18,21 @@ public class Sentence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "word_id", nullable = false)
-    private Word word;
+    @Column(name = "eng_sentence", nullable = false, columnDefinition = "TEXT")
+    private String engSentence;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String sentence;
-
-    @Column(columnDefinition = "TEXT")
-    private String translatedSentence;
+    @Column(name = "kor_sentence", nullable = false, columnDefinition = "TEXT")
+    private String korSentence;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "sentence")
+    private List<WordSentenceMapping> wordMappings;
+
+    @OneToMany(mappedBy = "sentence")
+    private List<ScriptMapping> scriptMappings;
 }
