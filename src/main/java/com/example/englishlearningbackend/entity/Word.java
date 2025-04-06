@@ -34,5 +34,5 @@ public class Word {
     private List<Meaning> meanings;
 
     @OneToMany(mappedBy = "word", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Sentence> sentences;
+    private List<WordSentenceMapping> sentenceMappings;
 }
